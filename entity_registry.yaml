@@ -1,0 +1,18 @@
+media_player.apple_tv:
+  platform: apple_tv
+  unique_id: 84558e26bfee584c372c310cd07afe67b78ea948b4a3122f00c8f1c9acfa812f
+remote.apple_tv:
+  platform: apple_tv
+  unique_id: 84558e26bfee584c372c310cd07afe67b78ea948b4a3122f00c8f1c9acfa812f
+media_player.family_room_speaker:
+  platform: cast
+  unique_id: 06dc89d7-9379-ecff-e34e-fb595ddc2e51
+media_player.plex_web_chrome:
+  platform: plex
+  unique_id: 2774gdj9jscgret654pcqddn
+media_player.fire_tv:
+  platform: plex
+  unique_id: 4ebd926ade016ff2-com-plexapp-android
+media_player.chrome:
+  platform: plex
+  unique_id: yjw8euwq5sne53pwyagu8c4e

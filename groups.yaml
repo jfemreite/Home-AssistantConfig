@@ -1,0 +1,72 @@
+
+default_view:
+    view: yes
+    icon: mdi:home
+    entities:
+      - group.downstairs
+      - group.upstairs
+      - group.weather
+      - group.people
+      - group.doorsensors
+      - group.media
+      - scene.evening_lights
+      - scene.relax
+      - scene.morning
+      - scene.joel_bed
+      - input_select.hass_theme
+    
+
+downstairs:
+    name: Downstairs
+    entities:
+      - light.living_room_lights
+      - light.pendulums
+      - light.sink
+
+upstairs:
+    name: Upstairs
+    entities:
+      - light.media_room_lights
+      - light.joel_light
+      
+kitchen:
+    name: Kitchen
+    view: no
+    entities:
+      - light.pendulums
+      - light.sink
+      
+doorsensors:
+    name: Doors
+    entities:
+    - binary_sensor.front_door
+
+weather:
+    name: Weather
+    entities:
+    - sensor.dark_sky_temperature
+    - sensor.dark_sky_daily_high_temperature
+    - sensor.dark_sky_daily_low_temperature
+    - sensor.dark_sky_humidity
+    - sensor.dark_sky_precip_probability
+    - sun.sun
+
+people:
+    name: People
+    entities:
+    - device_tracker.my_device
+    - device_tracker.jamiefemreitesiphone
+    
+adults:
+    name: adults
+    entities:
+    - device_tracker.my_device
+    - device_tracker.jamiefemreitesiphone
+    
+media:
+    name: media
+    view: yes
+    entities:
+    - media_player.spotify
+    - media_player.kodi
+    - media_player.fire_tv

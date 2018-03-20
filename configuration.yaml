@@ -1,0 +1,163 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 2450
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Boise
+  # Customization file
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+google_assistant:
+  project_id: homeassistant-98a6f
+  client_id: NAepbiJDFF0UWg63hTAJikv09
+  access_token: !secret google
+  exposed_domains:
+    - switch
+    - light
+    - group
+    - scene
+
+  
+
+#Sensors
+binary_sensor:
+  - platform: mqtt
+    name: "Front Door"
+    state_topic: "smartthings/Front Door/contact/state"
+    payload_on: "open"     #This is case sensitive!
+    payload_off: "closed"    #This is case sensitive!
+    device_class: opening  #Your sensor will read as open/closed instead of on/off with this setting
+    retain: true     #this is important so HA doesn't report the sensor as disconnected
+
+#Lights
+light: !include light.yaml
+
+# Enables the frontend
+frontend:
+    themes: !include themes.yaml
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret baseurl
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# Tracked history is kept for 10 days
+recorder:
+  purge_keep_days: 10
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices                                                            
+map:                                                                                                               
+                                                                                                                   
+zone: !include zones.yaml                                                                                                     
+  
+                                                                                                                   
+# Person tracker                                                                                                   
+device_tracker:                                                                         
+    - platform: icloud
+      username: !secret iclouduser
+      password: !secret jamie_icloud
+      account_name: Josh_icloud
+      
+    - platform: mqtt_json
+      devices:
+        my_device: zanzito/Josh_Pixel/location
+                                                                                                                   
+mqtt:
+    broker: localhost   
+    username: !secret mqqtuser
+    password: !secret mqtt
+    discovery: true
+    discovery_prefix: smartthings
+
+# Track the sun
+sun:
+
+# Sensors                                                                                              
+sensor:                                                                                                            
+ # - platform: yr                                                                                                  
+  - platform: darksky                                                                                              
+    api_key: !secret darksky                                                                     
+    monitored_conditions:                                                                                          
+      - precip_probability                                                                                         
+      - humidity                                                                                                   
+      - temperature_max                                                                                            
+      - temperature_min                                                                                            
+      - temperature                                                                                                
+    update_interval:                                                                                               
+        minutes: 3
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+media_player:
+  - platform: kodi
+    host: 192.168.0.104
+    
+  - platform: spotify
+    client_id: 3b9cc22c21a34ff19802f6b61fee6bfd
+    client_secret: !secret spotify
+
+
+notify:
+  - platform: pushbullet
+    api_key: !secret pushbullet
+    name: mypushbullet
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+alert: !include alert.yaml
+
+
+input_select:
+  hass_theme:
+    name: HASS Theme
+    options:
+      - default
+      - solarized
+      - PmxMononight
+      - Night_Theme
+      - darkred
+    initial: default
+    icon: mdi:theme-light-dark

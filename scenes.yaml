@@ -1,0 +1,23 @@
+- name: evening_lights
+  entities: 
+    group.downstairs:
+        state: on
+        brightness: 80
+
+- name: relax
+  entities: 
+    group.downstairs:
+        state: on
+        brightness: 20
+        
+- name: morning
+  entities:
+    group.downstairs:
+        state: on
+        brightness: 60
+
+- name: joel_bed
+  entities:
+    light.joel_light:
+        state: on
+        brightness: 10

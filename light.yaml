@@ -1,0 +1,77 @@
+- platform: mqtt
+  name: "Living Room Lights"
+  state_topic: "smartthings/Living Room Lights/switch/state"
+  command_topic: "smartthings/Living Room Lights/switch/cmd"
+  brightness_state_topic: 'smartthings/Living Room Lights/level/state'
+  brightness_command_topic: 'smartthings/Living Room Lights/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+    
+- platform: mqtt
+  name: "Media Room Lights"
+  state_topic: "smartthings/Media Room/switch/state"
+  command_topic: "smartthings/Media Room/switch/cmd"
+  brightness_state_topic: 'smartthings/Media Room/level/state'
+  brightness_command_topic: 'smartthings/Media Room/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+
+- platform: mqtt
+  name: "Pendulum 1"
+  state_topic: "smartthings/Kitchen Pendulum 1/switch/state"
+  command_topic: "smartthings/Kitchen Pendulum 1/switch/cmd"
+  brightness_state_topic: 'smartthings/Kitchen Pendulum 1/level/state'
+  brightness_command_topic: 'smartthings/Kitchen Pendulum 1/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+    
+- platform: mqtt
+  name: "Pendulum 2"
+  state_topic: "smartthings/Kitchen Pendulum 2/switch/state"
+  command_topic: "smartthings/Kitchen Pendulum 2/switch/cmd"
+  brightness_state_topic: 'smartthings/Kitchen Pendulum 2/level/state'
+  brightness_command_topic: 'smartthings/Kitchen Pendulum 2/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+    
+- platform: mqtt
+  name: "Sink"
+  state_topic: "smartthings/Kitchen Sink 1/switch/state"
+  command_topic: "smartthings/Kitchen Sink 1/switch/cmd"
+  brightness_state_topic: 'smartthings/Kitchen Sink 1/level/state'
+  brightness_command_topic: 'smartthings/Kitchen Sink 1/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+  
+- platform: mqtt
+  name: "Joel Light"
+  state_topic: "smartthings/Joels Light/switch/state"
+  command_topic: "smartthings/Joels Light/switch/cmd"
+  brightness_state_topic: 'smartthings/Joels Light/level/state'
+  brightness_command_topic: 'smartthings/Joels Light/level/cmd'
+  brightness_scale: 100
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  optimistic: false
+  
+- platform: group
+  name: Pendulums
+  entities:
+      - light.pendulum_1
+      - light.pendulum_2

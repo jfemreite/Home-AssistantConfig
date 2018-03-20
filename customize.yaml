@@ -1,0 +1,24 @@
+sensor.dark_sky_temperature:
+  friendly_name: Current Temp
+sensor.dark_sky_daily_high_temperature:
+  friendly_name: Daily  High
+sensor.dark_sky_daily_low_temperature:
+  friendly_name: Daily Low
+sensor.dark_sky_humidity:
+  friendly_name: Humidity
+sensor.dark_sky_precip_probability:
+  friendly_name: Precipitation
+media_player.apple_tv:
+  hidden: true
+media_player.family_room_speaker:
+  hidden: true
+remote.apple_tv:
+  hidden: true
+group.downstairs:
+  order: 1
+group.upstairs:
+  order: 4
+group.people:
+  order: 3
+group.weather:
+  order: 1

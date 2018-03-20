@@ -1,0 +1,173 @@
+#Turn on lights at night if people are home
+- alias: 'Evening Lights'
+  trigger:
+      - platform: sun
+        event: sunset
+        offset: '-01:00:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+      - condition: time
+        after: '16:00:00'
+        before: '23:00:00'
+  action:
+      service: homeassistant.turn_on
+      entity_id: scene.evening_lights
+
+#Turn down the lights in the evening if people are home
+- alias: 'Relax'
+  trigger:
+     - platform: time
+       at: '20:00:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+  action:
+     service: homeassistant.turn_on
+     entity_id: scene.relax
+     
+#Turn on lights when people arrive home after dark
+- alias: 'Coming Home'
+  trigger:
+     - platform: state 
+       entity_id: group.adults
+       from: 'away'
+       to: 'home'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+      - condition: time
+        after: '19:00:00'
+  action:
+     service: homeassistant.turn_on
+     entity_id: scene.evening_lights
+     
+#Turn on the lights in the morning
+- alias: 'Morning'
+  trigger:
+     - platform: time
+       at: '05:10:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+  action:
+     service: homeassistant.turn_on
+     entity_id: scene.morning
+     
+#Turn off lights mid morning
+- alias: 'Morning Lights Off'
+  trigger:
+     - platform: time
+       at: '09:00:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+  action:
+     service: light.turn_off
+     entity_id: group.downstairs
+     
+#Turn off lights when everyone leaves
+- alias: 'Everyone Gone'
+  trigger:
+     - platform: state
+       entity_id: group.adults
+       from: 'home'
+       to: 'away'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'away'
+  action:
+     service: light.turn_off
+     entity_id: group.all_lights
+     
+#Turn on Joels light for bedtime
+- alias: 'Joel Bed'
+  trigger:
+     - platform: time
+       at: '20:30:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+  action:
+     service: homeassistant.turn_on
+     entity_id: scene.joel_bed
+     
+#Turn off Joel light after he goes to sleep
+- alias: 'Joel Sleep'
+  trigger:
+     - platform: time
+       at: '22:30:00'
+  condition:
+      - condition: state
+        entity_id: group.adults
+        state: 'home'
+  action:
+        service: light.turn_off
+        entity_id: light.joel_light
+        
+# Alert of intruders at night        
+- alias: 'Night Alarm'
+  trigger:
+       platform: state
+       entity_id: binary_sensor.front_door
+       from: 'off'
+       to: 'on'
+  condition:
+      - condition: state
+        entity_id: binary_sensor.front_door
+        state: 'on'
+      - condition: time
+        after: '21:00:00'
+        before: '07:00:00'
+  action:
+     - service: homeassistant.turn_on
+       entity_id: scene.morning
+     - service: notify.mypushbullet 
+       data_template:
+         title: "Front Door Is Open"
+         message: "Intruder Alert the front door is open"
+
+# Notify when Jamie gets home        
+- alias: 'Jamie Home'
+  trigger:
+       platform: state
+       entity_id: device_tracker.jamiefemreitesiphone
+       from: 'not_home'
+       to: 'home'
+  action:
+     - service: notify.mypushbullet 
+       data_template:
+         title: "Jamie Home"
+         message: "Your beautiful wife is home"
+         
+# Notify when Jamie Leaves Work       
+- alias: 'Jamie Leave Work'
+  trigger:
+       platform: state
+       entity_id: device_tracker.jamiefemreitesiphone
+       from: 'Jamie_Work'
+       to: 'not_home'
+  action:
+     - service: notify.mypushbullet 
+       data_template:
+         title: "Jamie Home"
+         message: "Your beautiful has left work"
+        
+#Allow switching of themes
+- id: hass_theme
+  alias: hass_theme
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_select.hass_theme
+  action:
+    - service: frontend.set_theme
+      data_template:
+        name: "{{ states.input_select.hass_theme.state }}"
